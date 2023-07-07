@@ -1,0 +1,53 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Signup using FireBase Authentication</title>
+</head>
+<body>
+    <button type="button" id="register">Google</button>
+</body>
+</html>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+    import { GoogleAuthProvider,getAuth, signInWithPopup,} from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyC31G9QeYV-LQGNY1WvBSxVS5vc3kGQtmU",
+      authDomain: "authentication-79be6.firebaseapp.com",
+      projectId: "authentication-79be6",
+      storageBucket: "authentication-79be6.appspot.com",
+      messagingSenderId: "698470751034",
+      appId: "1:698470751034:web:2f0d791ea2155bd7384e03"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    console.log(app)
+
+    const provider = new GoogleAuthProvider();
+
+    document.getElementById('register').addEventListener('click',function(){
+        const auth = getAuth();
+        signInWithPopup(auth, provider)
+        .then((result) => {
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const token = credential.accessToken;
+            // The signed-in user info.
+            const user = result.user;
+            // IdP data available using getAdditionalUserInfo(result)
+            // ...
+        }).catch((error) => {
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // The email of the user's account used.
+            const email = error.customData.email;
+            // The AuthCredential type that was used.
+            const credential = GoogleAuthProvider.credentialFromError(error);
+            // ...
+        });
+    })
+    
+  </script>

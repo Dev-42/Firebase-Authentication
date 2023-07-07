@@ -1,0 +1,67 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignIn page</title>
+</head>
+<body>
+    <div>
+        <button id="logout" style="display: none;">LogOut</button>
+      </div>
+    <form action="">
+        <div>
+            <div>
+                <label for="email">Email</label>
+                <input type="text" name="login_email" id="login_email" placeholder="Enter Your Email" />
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input type="password" name="login_password" autocomplete="on" id="login_password" placeholder="Enter your password" />
+            </div>
+            <button type="button" id="login" name="login" class="btn btn-success">Login</button>
+        </div>
+    </form>
+</body>
+</html>
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyC31G9QeYV-LQGNY1WvBSxVS5vc3kGQtmU",
+      authDomain: "authentication-79be6.firebaseapp.com",
+      projectId: "authentication-79be6",
+      storageBucket: "authentication-79be6.appspot.com",
+      messagingSenderId: "698470751034",
+      appId: "1:698470751034:web:2f0d791ea2155bd7384e03"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    console.log(app)
+
+    document.getElementById('login').addEventListener('click',function(){
+        let email = document.getElementById('login_email').value;
+        let password = document.getElementById('login_password').value
+
+        const auth = getAuth();
+        signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            alert("Successfully logged in")
+            document.getElementById('logout').style.display = 'block'
+            // ...
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            alert(errorMessage)
+        });
+    })
+    
+  </script>
